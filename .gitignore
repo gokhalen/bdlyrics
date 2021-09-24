@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*~*
+
+# scraped files
+scrape/
 
 # C extensions
 *.so
