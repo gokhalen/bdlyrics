@@ -3,7 +3,7 @@
 import requests
 import sys,os
 import argparse
-
+from bs4 import BeautifulSoup
 
 # config parameters
 baseurl   = 'https://www.bobdylan.com/songs/'
@@ -20,6 +20,24 @@ if not os.path.isfile(basefile):
         for line in resp.text:
             fout.write(line)
 
+# read songs.html            
+from bs4 import BeautifulSoup
+with open(basefile) as fin:
+    ll  = fin.readlines()
+htmlstr = ''
+for l in ll:
+    htmlstr +=l
+soup  = BeautifulSoup(htmlstr,'html.parser')
+# https://stackoverflow.com/questions/16248723/how-to-find-spans-with-a-specific-class-containing-specific-text-using-beautiful
+spans     = soup.find_all('span',{'class':'song'})
+songnames = [span.get_text() for span in spans]
+songlinks = []
+for span in spans:
+    links = span.find_all('a')
+    for link in links:
+        songlinks.append(str(link['href']))
+        
+assert (len(songlinks)==len(songnames)), ' len(songnames) != len(songlinks)'    
             
 
 
