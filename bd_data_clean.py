@@ -1,4 +1,3 @@
-import pandas as pd
 import json
 import re
 import sys
@@ -39,10 +38,15 @@ def remove_copyright(lyrics_str,songname):
     if len(copystart) not in [0,1]:
         print(f'multiple copyrights detected for {songname=}')
 
-    start = copystart[0]
-    copyrightratio = start/songlength
-
-    print(f'{copyrightratio=}')
+    if copystart:
+        start = copystart[0]
+        copyrightratio = start/songlength
+        print('-'*80+'\n')
+        print(f'{copyrightratio=}'+'\n')
+        print(out[start:])
+        print('Enter any key to continue...')
+        input()
+        
     
     return out
 
