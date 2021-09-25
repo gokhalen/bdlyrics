@@ -6,6 +6,7 @@ __pycache__/
 
 # scraped files
 scrape/
+scrape_backup/
 
 # C extensions
 *.so
