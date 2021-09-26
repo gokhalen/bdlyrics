@@ -6,16 +6,16 @@ jsonfile  = 'scrape/data.json'
 jsonclean = 'scrape/data.json.clean'
 processed = []
 
+# removing unicode characters
+# https://www.pythonpool.com/remove-unicode-characters-python/
+# 'nachiket\u00a9'.encode('ascii','ignore').decode('ascii')
 
 # functions and classes
-
-
-
 def remove_punc(lyrics_str):
     '''
     removes '?',',' and other punc from text 
     '''
-    puncs = ['?',',',')','(']
+    puncs = ['?',',',')','(','.','"']
     out   = lyrics_str
     for punc in puncs:
         out = out.replace(punc,'')
@@ -44,6 +44,7 @@ def remove_copyright(lyrics_str,songname):
         print('-'*80+'\n')
         print(f'{copyrightratio=}'+'\n')
         print(out[start:])
+        out = out[:start]
         print('Enter any key to continue...')
         input()
         
@@ -77,9 +78,9 @@ for bd_dict in bd_datalist:
     # processing_message(songname)
     new_lyrics = remove_punc(songlyrics)
     new_lyrics = remove_copyright(new_lyrics,songname)
-    check_word(new_lyrics,songname,['alternate version'])
+    check_word(new_lyrics,songname,['alternate version','copyright'])
 
-    bd_dict['cleanlyrics'] = new_lyrics
+    bd_dict['songlyrics'] = new_lyrics
     
     processed.append(bd_dict)
     
